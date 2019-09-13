@@ -1,5 +1,5 @@
 {
-  "name": "timer-chrome-extension",
+  "name": "hackforplay-timer",
   "version": "1.0",
   "description": "5 min challenge",
   "content_scripts": [
