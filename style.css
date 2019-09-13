@@ -1,0 +1,28 @@
+.timer-chrome-extension {
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 32px;
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 100000;
+}
+.timer-chrome-extension.red {
+  background-color: rgba(255, 0, 0, 0.5);
+  animation: bounce 500ms ease-in-out 0ms infinite alternate;
+}
+
+.timer-chrome-extension span {
+  color: white;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}

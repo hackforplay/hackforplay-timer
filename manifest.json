@@ -1,0 +1,14 @@
+{
+  "name": "timer-chrome-extension",
+  "version": "1.0",
+  "description": "5 min challenge",
+  "content_scripts": [
+    {
+      "matches": ["*://hackforplay-sandbox.firebaseapp.com/*"],
+      "js": ["dist/main.js"],
+      "css": ["style.css"],
+      "all_frames": true
+    }
+  ],
+  "manifest_version": 2
+}
