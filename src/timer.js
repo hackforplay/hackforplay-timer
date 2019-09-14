@@ -19,12 +19,20 @@ $.when($.ready).then(() => {
 
 chrome.storage.local.get([config.storageKey], function(result) {
   if (result) {
-    console.log('start', result);
-    start(parseInt(result, 10));
+    const time = parseInt(result['hackforplay-timer'], 10);
+    if (time) {
+      console.log('start', time);
+      start(time);
+    }
   }
 });
 
+let cancelId = 0;
+
 function start(startTime = 0) {
+  if (cancelId) {
+    cancelAnimationFrame(cancelId);
+  }
   chrome.storage.local.set(
     { [config.storageKey]: startTime.toString() },
     function() {
@@ -33,7 +41,7 @@ function start(startTime = 0) {
   );
 
   (function update() {
-    const elapsed = Date.now() - started;
+    const elapsed = Date.now() - startTime;
     const last = Math.max(config.time - ((elapsed / 1000) >> 0), 0);
     const sec = last % 60;
     const min = (last / 60) >> 0;
@@ -46,6 +54,6 @@ function start(startTime = 0) {
       $div.addClass('red');
     }
 
-    requestAnimationFrame(update);
+    cancelId = requestAnimationFrame(update);
   })();
 }
