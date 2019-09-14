@@ -2,13 +2,14 @@ import $ from 'jquery';
 
 const config = {
   time: 300,
-  red: 10
+  red: 10,
+  storageKey: 'hackforplay-timer'
 };
 const $time = $('<span>').text('5:00');
 
 const $div = $('<div>')
   .addClass('timer-chrome-extension')
-  .on('click', start)
+  .on('click', () => start(Date.now()))
   .append($time);
 
 $.when($.ready).then(() => {
@@ -16,8 +17,20 @@ $.when($.ready).then(() => {
   $('#app>div').append($div);
 });
 
-function start() {
-  const started = Date.now();
+chrome.storage.local.get([config.storageKey], function(result) {
+  if (result) {
+    console.log('start', result);
+    start(parseInt(result, 10));
+  }
+});
+
+function start(startTime = 0) {
+  chrome.storage.local.set(
+    { [config.storageKey]: startTime.toString() },
+    function() {
+      console.log('set', startTime);
+    }
+  );
 
   (function update() {
     const elapsed = Date.now() - started;
